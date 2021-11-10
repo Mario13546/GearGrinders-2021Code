@@ -7,13 +7,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Tank_Drive", group="Iterative Opmode")
-public class Tank_Drive extends OpMode {
+@TeleOp(name="TankDrive", group="Iterative Opmode")
+public class TankDrive extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive;
     private DcMotor rightDrive;
     private DcMotor actuator;
+
+    //Constructor
+    public Tank_Drive() {
+        //
+    }
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -24,13 +29,11 @@ public class Tank_Drive extends OpMode {
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         actuator   = hardwareMap.get(DcMotor.class, "actuator");
 
         // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
@@ -100,4 +103,4 @@ public class Tank_Drive extends OpMode {
 
 }
 
-// End of some class that I really don't understand
+// End of the class
