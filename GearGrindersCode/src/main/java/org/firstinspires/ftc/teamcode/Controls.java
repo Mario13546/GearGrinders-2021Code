@@ -37,35 +37,9 @@ public class Controls {
 
     /**
      * Gamepad 2
-     * Controls the tilt of the manipulator
      */
-    public double tiltPower() {
-        double power = -1 * logitech.gamepad2.left_stick_y;
-        double tiltPower = power * speedMultiplier; 
-
-        return tiltPower;
-    }
-
-    /**
-     * Gamepad 2
-     * Sets the position of the grabber servo
-     */
-    public GrabberState getGrabberPosition() {
-        boolean deployRetract = logitech.gamepad2.right_bumper;
-
-        //Checks if the right bumper is pressed
-        if (deployRetract == true) {
-            //If the grabber is currently deployed, changes it to be retracted
-            if (grabberState == GrabberState.DEPLOYED) {
-                grabberState = GrabberState.RETRACTED;
-            }
-            //If the grabber is currently retracted, changes it to be depolyed
-            else if (grabberState == GrabberState.RETRACTED) {
-                grabberState = GrabberState.DEPLOYED;
-            }
-        }
-
-        return grabberState;
+    public void void() {
+        //Nothing yet...
     }
 }
 

@@ -15,7 +15,6 @@ public class DriverControlled extends OpMode {
     HardwareRobot robot       = HardwareRobot.getInstance();
     ElapsedTime   runtime     = new ElapsedTime();   // Start counting the time
     Drive         drive       = new Drive();         // A class for drive functions
-    Manipulator   manipulator = new Manipulator();   // A class for all manipulator funcitons
     Controls      controls    = new Controls(this);  // A class for the controling funcitons
 
     /*
@@ -27,9 +26,6 @@ public class DriverControlled extends OpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-
-        //Sets the motor mode
-        robot.teleopConfig();
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -57,17 +53,9 @@ public class DriverControlled extends OpMode {
      */
     @Override
     public void loop() {
-        //Input variables
-        //double drive  = -1 * gamepad1.left_stick_y;
-        //double strafe = gamepad1.left_stick_x;
-        //double turn   = gamepad1.right_stick_x;
-
         // Wheel control
         wheelControl();
 
-        // Manipulator Control
-        manipulatorControl();
-        
         //Displays runtime
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
@@ -83,23 +71,10 @@ public class DriverControlled extends OpMode {
     private void wheelControl() {
         // Gamepad 1 inputs
         double leftStickY  = controls.drivePower();
-        double leftStickX  = controls.strafePower();
         double rightStickX = controls.turnPower();
 
         //Mecanum Drive Method
-        drive.mecanumDrive(leftStickY, leftStickX, rightStickX);
-    }
-
-    private void manipulatorControl() {
-        //Gamepad 2 functions
-        double                tiltPower      = controls.tiltPower();
-        Controls.GrabberState grabberControl = controls.getGrabberPosition();
-
-        //Tilt control
-        manipulator.tiltArm(tiltPower);
-
-        //Grabber control
-        manipulator.setGrabberPosition(grabberControl);
+        drive.tankDrive(leftStickY, rightStickX);
     }
 
 }
