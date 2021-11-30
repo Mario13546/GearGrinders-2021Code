@@ -72,6 +72,9 @@ public class DriverControlled extends OpMode {
         //This should never do anything
     }
 
+    /**
+     * A method to control the tank treads
+     */
     private void wheelControl() {
         // Gamepad 1 inputs
         double leftStickY  = controls.drivePower();
@@ -81,6 +84,9 @@ public class DriverControlled extends OpMode {
         drive.tankDrive(leftStickY, rightStickX);
     }
 
+    /**
+     * A method to control the grabber and related functions
+     */
     private void grabberControl() {
         //Gamepad 2 functions
         double                tiltPower       = controls.tiltPower();
@@ -92,7 +98,7 @@ public class DriverControlled extends OpMode {
 
         //Makes the grabber arm extend
         grabber.extendArm(extendPower);
-        
+
         //Makes the grabber, well grab...
         grabber.setGrabberPosition(grabberControl);
     }
