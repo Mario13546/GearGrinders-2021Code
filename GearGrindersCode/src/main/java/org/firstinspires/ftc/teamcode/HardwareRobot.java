@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class HardwareRobot {
     /* Singleton For Hardware Robot */
@@ -19,6 +20,12 @@ public class HardwareRobot {
     //DcMotors motors
     public DcMotor leftDrive;
     public DcMotor rightDrive;
+    public DcMotor extend;
+    public DcMotor tilt;
+
+    //Servo motors
+    public Servo leftClaw;
+    public Servo rightClaw;
 
     //firstTime variables
     boolean firstTime = true;
@@ -38,22 +45,39 @@ public class HardwareRobot {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Initialize the DcMotors motors
-        frontLeft  = hwMap.get(DcMotor.class, "leftDrive");
-        backLeft   = hwMap.get(DcMotor.class, "rightDrive");
+        // Initialize the Drive motors
+        frontLeft = hwMap.get(DcMotor.class, "leftDrive");
+        backLeft  = hwMap.get(DcMotor.class, "rightDrive");
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
+        // Initialize the Grabber motors
+        extend    = hwMap.get(DcMotor.class, "extend");
+        tilt      = hwMap.get(DcMotor.class, "tilt");
+
+        // Initialize the Grabber servos
+        leftClaw  = hwMap.get(Servo.class, "leftClaw");
+        rightClaw = hwMap.get(Servo.class, "rightClaw")
+
+        // Sets all the motor directions
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        extend.setDirection(DcMotor.Direction.FORWARD);
+        tilt.setDirection(DcMotor.Direction.FORWARD);
 
-        //Makes the robot run without encoders (it doesn't have them anyway)
+        // Makes the robot run without encoders (it doesn't have them anyway)
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Set all motors to zero power
         leftDrive.setPower(0.00);
         rightDrive.setPower(0.00);
+        extend.setPower(0.00);
+        tilt.setPower(0.00)
+
+        // Sets the servos to their starting position
+        leftClaw.setPosition(0.00);
+        rightClaw.setPosition(0.00);
     }
     
 }

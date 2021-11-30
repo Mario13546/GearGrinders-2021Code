@@ -13,9 +13,10 @@ public class DriverControlled extends OpMode {
 
     /* Instance Creation */
     HardwareRobot robot       = HardwareRobot.getInstance();
-    ElapsedTime   runtime     = new ElapsedTime();   // Start counting the time
+    ElapsedTime   runtime     = new ElapsedTime();   // Starts counting the time
+    Controls      controls    = new Controls(this);  // A class for the controling functions
+    Grabber       grabber     = new Grabber();       // A class for grabber related functions
     Drive         drive       = new Drive();         // A class for drive functions
-    Controls      controls    = new Controls(this);  // A class for the controling funcitons
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -56,6 +57,9 @@ public class DriverControlled extends OpMode {
         // Wheel control
         wheelControl();
 
+        //Grabber control
+        grabberControl();
+
         //Displays runtime
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
@@ -75,6 +79,22 @@ public class DriverControlled extends OpMode {
 
         //Mecanum Drive Method
         drive.tankDrive(leftStickY, rightStickX);
+    }
+
+    private void grabberControl() {
+        //Gamepad 2 functions
+        double                tiltPower       = controls.tiltPower();
+        double                extendPower     = controls.intakePower();
+        Controls.GrabberState grabberPosition = controls.getGrabberPosition();
+
+        //Makes the grabber arm tilt
+        grabber.tiltArm(tiltPower);
+
+        //Makes the grabber arm extend
+        grabber.extendArm(extendPower);
+        
+        //Makes the grabber, well grab...
+        grabber.setGrabberPosition(grabberControl);
     }
 
 }
