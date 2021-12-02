@@ -46,16 +46,16 @@ public class HardwareRobot {
         hwMap = ahwMap;
 
         // Initialize the Drive motors
-        frontLeft = hwMap.get(DcMotor.class, "leftDrive");
-        backLeft  = hwMap.get(DcMotor.class, "rightDrive");
+        frontLeft = hwMap.get(DcMotor.class, "left_drive");
+        backLeft  = hwMap.get(DcMotor.class, "right_drive");
 
         // Initialize the Grabber motors
         extend    = hwMap.get(DcMotor.class, "extend");
         tilt      = hwMap.get(DcMotor.class, "tilt");
 
         // Initialize the Grabber servos
-        leftClaw  = hwMap.get(Servo.class, "leftClaw");
-        rightClaw = hwMap.get(Servo.class, "rightClaw")
+        leftClaw  = hwMap.get(Servo.class, "left_claw");
+        rightClaw = hwMap.get(Servo.class, "right_claw")
 
         // Sets all the motor directions
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
