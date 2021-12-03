@@ -1,3 +1,4 @@
+//End of the Controls class
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -8,7 +9,7 @@ public class Controls {
         OPEN,
         CLOSED;
     }
-    GrabberState grabberState = GrabberState.DEPLOYED;
+    GrabberState grabberState = GrabberState.OPEN;
 
     /* Class Variables */
     double driveSpeedMultiplier = 1.00;
@@ -47,11 +48,17 @@ public class Controls {
      * Gamepad 2
      * Gets the power for the tilting motor
      */
-    public void tiltPower() {
+    public double tiltPower() {
         double power = -1 * logitech.gamepad2.left_stick_y;
         double tiltPower = power * tiltSpeedMultiplier; 
 
         return tiltPower;
+    }
+    
+    public double extendPower() {
+        double power = logitech.gamepad2.right_stick_y;
+        
+        return power;
     }
 
     /**
@@ -65,12 +72,12 @@ public class Controls {
 
         //Checks if the right bumper is pressed
         if (rightBumper == true) {
-            //Sets the grabber state to deployed
+            //Sets the grabber state to open
             grabberState = GrabberState.OPEN;
         }
         //Checks if the left bumper is pressed
         else if (leftBumper == true) {
-            //Sets the grabber state to retracted
+            //Sets the grabber state to closed
             grabberState = GrabberState.CLOSED;
         }
 

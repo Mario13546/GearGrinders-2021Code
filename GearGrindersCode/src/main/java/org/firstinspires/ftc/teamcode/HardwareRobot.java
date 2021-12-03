@@ -46,8 +46,8 @@ public class HardwareRobot {
         hwMap = ahwMap;
 
         // Initialize the Drive motors
-        frontLeft = hwMap.get(DcMotor.class, "left_drive");
-        backLeft  = hwMap.get(DcMotor.class, "right_drive");
+        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
+        rightDrive = hwMap.get(DcMotor.class, "right_drive");
 
         // Initialize the Grabber motors
         extend    = hwMap.get(DcMotor.class, "extend");
@@ -55,7 +55,7 @@ public class HardwareRobot {
 
         // Initialize the Grabber servos
         leftClaw  = hwMap.get(Servo.class, "left_claw");
-        rightClaw = hwMap.get(Servo.class, "right_claw")
+        rightClaw = hwMap.get(Servo.class, "right_claw");
 
         // Sets all the motor directions
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -64,8 +64,8 @@ public class HardwareRobot {
         tilt.setDirection(DcMotor.Direction.FORWARD);
 
         // Makes the robot run without encoders (it doesn't have them anyway)
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -73,7 +73,7 @@ public class HardwareRobot {
         leftDrive.setPower(0.00);
         rightDrive.setPower(0.00);
         extend.setPower(0.00);
-        tilt.setPower(0.00)
+        tilt.setPower(0.00);
 
         // Sets the servos to their starting position
         leftClaw.setPosition(0.00);

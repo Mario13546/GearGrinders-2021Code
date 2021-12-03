@@ -90,7 +90,7 @@ public class DriverControlled extends OpMode {
     private void grabberControl() {
         //Gamepad 2 functions
         double                tiltPower       = controls.tiltPower();
-        double                extendPower     = controls.intakePower();
+        double                extendPower     = controls.extendPower();
         Controls.GrabberState grabberPosition = controls.getGrabberPosition();
 
         //Makes the grabber arm tilt
@@ -100,7 +100,7 @@ public class DriverControlled extends OpMode {
         grabber.extendArm(extendPower);
 
         //Makes the grabber, well grab...
-        grabber.setGrabberPosition(grabberControl);
+        grabber.setGrabberPosition(grabberPosition);
     }
 
 }
