@@ -55,10 +55,15 @@ public class Controls {
         return tiltPower;
     }
     
+    /**
+     * Gamepad 2
+     * Gets the extend speed multiplier
+     */
     public double extendPower() {
-        double power = logitech.gamepad2.right_stick_y;
+        double power = -1 * logitech.gamepad2.right_stick_y;
+        double extendPower = power * extendSpeedMultiplier;
         
-        return power;
+        return extendPower;
     }
 
     /**
