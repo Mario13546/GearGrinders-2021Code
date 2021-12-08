@@ -61,11 +61,9 @@ public class Auto extends LinearOpMode {
         robot.autoConfig();
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d :%7d :%7d",
-                          robot.frontLeft.getCurrentPosition(),
-                          robot.backLeft.getCurrentPosition(),
-                          robot.frontRight.getCurrentPosition(),
-                          robot.backRight.getCurrentPosition());
+        telemetry.addData("Path0",  "Starting at %7d :%7d",
+                          robot.leftDrive.getCurrentPosition(),
+                          robot.rightDrive.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -102,22 +100,18 @@ public class Auto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.frontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.frontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.frontLeft.setTargetPosition(newLeftTarget);
-            robot.backLeft.setTargetPosition(newLeftTarget);
-            robot.frontRight.setTargetPosition(newRightTarget);
-            robot.backRight.setTargetPosition(newRightTarget);
+            newLeftTarget = robot.leftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.rightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            robot.leftDrive.setTargetPosition(newLeftTarget);
+            robot.rightDrive.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
             robot.startAutoMovement();
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.frontLeft.setPower(Math.abs(speed));
-            robot.backLeft.setPower(Math.abs(speed));
-            robot.frontRight.setPower(Math.abs(speed));
-            robot.backRight.setPower(Math.abs(speed));
+            robot.leftDrive.setPower(Math.abs(speed));
+            robot.rightDrive.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -127,23 +121,19 @@ public class Auto extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
-                   (robot.frontLeft.isBusy() && robot.frontRight.isBusy())) {
+                   (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d",
-                                robot.frontLeft.getCurrentPosition(),
-                                robot.backLeft.getCurrentPosition(),
-                                robot.frontRight.getCurrentPosition(),
-                                robot.backRight.getCurrentPosition());
+                                robot.leftDrive.getCurrentPosition(),
+                                robot.rightDrive.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.frontLeft.setPower(0.00);
-            robot.backLeft.setPower(0.00);
-            robot.frontRight.setPower(0.00);
-            robot.backRight.setPower(0.00);
+            robot.leftDrive.setPower(0.00);
+            robot.rightDrive.setPower(0.00);
 
             // Turn off RUN_TO_POSITION
             robot.stopAutoMovement();

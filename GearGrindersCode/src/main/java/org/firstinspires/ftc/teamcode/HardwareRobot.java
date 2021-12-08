@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class HardwareRobot {
@@ -16,7 +16,7 @@ public class HardwareRobot {
         return instance;
     }
 
-    /* Class Variables */
+    /* Object Creation */
     //DcMotors motors
     public DcMotor leftDrive;
     public DcMotor rightDrive;
@@ -27,11 +27,14 @@ public class HardwareRobot {
     public Servo leftClaw;
     public Servo rightClaw;
 
+    //Other members
+    HardwareMap hwMap;
+
+    /* Class Variables */
+    //Nothign Yet...
+    
     //firstTime variables
     boolean firstTime = true;
-
-    //Other members
-    HardwareMap hwMap = null;
 
     /**
      * Constructor
@@ -80,6 +83,77 @@ public class HardwareRobot {
         rightClaw.setPosition(0.00);
     }
     
+    /**
+     * Configures the motors for Autonomous
+     */
+    public void autoConfig() {
+        /* Resets the motor encoders */
+        resetEncoders();
+
+        /* Makes the motors run using encoders */
+        //Drive Motors
+        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        
+        //Manipulator Motors
+        //extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    /**
+     * Configures the motors to allow movement to a position
+     */
+    public void startAutoMovement() {
+        /* Makes the motors run to a position */
+        //Drive Motors
+        leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //Manipulator Motors
+        //extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //tilt.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    /**
+     * Configures the motors to stop movement
+     */
+    public void stopAutoMovement() {
+        /* Makes the motors run to a position */
+        //Drive Motors
+        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //Manipulator Motors
+        //extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    /**
+     * Makes the robot reset its encoders 
+     */
+    public void resetEncoders() {
+        //Drive Motors
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Manipulator Motors
+        //extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //tilt.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    /**
+     * Configures the motors for TeleOp
+     */
+    public void teleopConfig() {
+        /* Sets the motors to run without encoders */
+        //Drive Motors
+        leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //Manipulator Motor
+        extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 }
 
 //End of the HardwareRobot class

@@ -1,4 +1,3 @@
-//End of the Controls class
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -12,8 +11,9 @@ public class Controls {
     GrabberState grabberState = GrabberState.OPEN;
 
     /* Class Variables */
-    double driveSpeedMultiplier = 1.00;
-    double tiltSpeedMultiplier  = 0.50;
+    double driveSpeedMultiplier  = 1.00;
+    double tiltSpeedMultiplier   = 0.50;
+    double extendSpeedMultiplier = 0.50;
     
     //Object Creation
     OpMode logitech;
