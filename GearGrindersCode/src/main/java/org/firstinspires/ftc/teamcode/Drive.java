@@ -3,11 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.util.Range;
 
 public class Drive {
-    /* Class Variables */
-    //Nothing yet...
-
     //Object Creation
     HardwareRobot robot;
+
+    /* Class Variables */
+    double leftDriveStartPosition ;
+    double rightDriveStartPosition;
+
+    //firstTime variable
+    private boolean firstTime = true;
 
     /**
      * Constructor
@@ -37,37 +41,61 @@ public class Drive {
     /**
      * Autonomous driving
      */
-    public void autoForward(double feet) {
+    public int autoForward(double power, double rightInches, double leftInches) {
         //Variables
-        double autoPower = 0.50;
+        final double AUTO_POWER = power;
+
+        //Gets the start position for the motors
+        if (firstTime == true) {
+            //Makes firstTime false
+            firstTime = false;
+
+            //Gets the starting position
+            leftDriveStartPosition  = robot.getRightEncoder();
+            rightDriveStartPosition = robot.getLeftEncoder();
+        }
 
         //Feet to ticks
-        double target = feetToTicks(feet);
-        int targetInteger = (int)target;
+        double leftTarget = inchesToTicks(rightInches);
+        double rightTarget = inchesToTicks(leftInches);
+        int    leftTargetInteger  = (int)leftDriveStartPosition + (int)leftTarget;
+        int    rightTargetInteger = (int)rightDriveStartPosition + (int)rightTarget;
 
         //Sets the desired target position
-        robot.leftDrive.setTargetPosition(targetInteger);
-        robot.rightDrive.setTargetPosition(targetInteger);
+        robot.leftDrive .setTargetPosition(leftTargetInteger);
+        robot.rightDrive.setTargetPosition(rightTargetInteger);
 
         //Allow movement
         robot.startAutoMovement();
 
         //Sets the motor power
-        robot.leftDrive.setPower(autoPower);
-        robot.rightDrive.setPower(autoPower);
+        robot.leftDrive .setPower(AUTO_POWER);
+        robot.rightDrive.setPower(AUTO_POWER);
 
         //Stop movement
-        if (robot.rightDrive.getCurrentPosition() > (target - 100) ) {
+        if (robot.rightDrive.getCurrentPosition() > (leftTargetInteger - 0.001) ) {
+            firstTime = true;
             robot.stopAutoMovement();
+
+            return HardwareRobot.DONE;
+        }
+        else if (robot.rightDrive.getCurrentPosition() > (rightTargetInteger - 0.001) ) {
+            firstTime = true;
+            robot.stopAutoMovement();
+
+            return HardwareRobot.DONE;
+        }
+        else {
+            return HardwareRobot.CONT;
         }
     }
 
     /**
-     * Converts feet to encoder ticks
+     * Converts inches to encoder ticks
      */
-    private double feetToTicks(double targetFeet) {
-        final double TICKS_PER_FOOT = 0.00;         //This value is currently unknown
-        double ticks = targetFeet * TICKS_PER_FOOT;
+    public double inchesToTicks(double targetInches) {
+        final double TICKS_PER_INCH = 93.5/48000;      //This comes to be around 0.0019479167 ticks per inch
+        double ticks = targetInches * TICKS_PER_INCH;
 
         return ticks;
     }

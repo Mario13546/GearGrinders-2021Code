@@ -22,6 +22,7 @@ public class HardwareRobot {
     public DcMotor rightDrive;
     public DcMotor extend;
     public DcMotor tilt;
+    public DcMotor spin;
 
     //Servo motors
     public Servo leftClaw;
@@ -33,6 +34,12 @@ public class HardwareRobot {
     /* Class Variables */
     //Nothign Yet...
     
+    // ERROR CODES
+    public static final int FAIL = -1;
+    public static final int PASS =  1;
+    public static final int DONE =  2;
+    public static final int CONT =  3;
+
     //firstTime variables
     boolean firstTime = true;
 
@@ -56,6 +63,9 @@ public class HardwareRobot {
         extend    = hwMap.get(DcMotor.class, "extend");
         tilt      = hwMap.get(DcMotor.class, "tilt");
 
+        // Initialize the Spiny motor
+        spin      = hwMap.get(DcMotor.class, "spin");
+
         // Initialize the Grabber servos
         leftClaw  = hwMap.get(Servo.class, "left_claw");
         rightClaw = hwMap.get(Servo.class, "right_claw");
@@ -65,18 +75,19 @@ public class HardwareRobot {
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         extend.setDirection(DcMotor.Direction.FORWARD);
         tilt.setDirection(DcMotor.Direction.FORWARD);
+        spin.setDirection(DcMotor.Direction.FORWARD);
 
-        // Makes the robot run without encoders (it doesn't have them anyway)
-        leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Makes the non-drive motors run without encoders
         extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        spin.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Set all motors to zero power
         leftDrive.setPower(0.00);
         rightDrive.setPower(0.00);
         extend.setPower(0.00);
         tilt.setPower(0.00);
+        spin.setPower(0.00);
 
         // Sets the servos to their starting position
         leftClaw.setPosition(0.00);
@@ -94,10 +105,6 @@ public class HardwareRobot {
         //Drive Motors
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        
-        //Manipulator Motors
-        //extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
@@ -108,10 +115,6 @@ public class HardwareRobot {
         //Drive Motors
         leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //Manipulator Motors
-        //extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //tilt.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /**
@@ -122,10 +125,6 @@ public class HardwareRobot {
         //Drive Motors
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //Manipulator Motors
-        //extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //tilt.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
@@ -135,10 +134,6 @@ public class HardwareRobot {
         //Drive Motors
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Manipulator Motors
-        //extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //tilt.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     /**
@@ -150,9 +145,26 @@ public class HardwareRobot {
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //Manipulator Motor
+        //Manipulator Motors
         extend.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         tilt.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //Spiny motor
+        spin.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    /**
+     * 
+     */
+    public double getLeftEncoder() {
+        return rightDrive.getCurrentPosition();
+    }
+
+    /**
+     * 
+     */
+    public double getRightEncoder() {
+        return leftDrive.getCurrentPosition();
     }
 }
 
