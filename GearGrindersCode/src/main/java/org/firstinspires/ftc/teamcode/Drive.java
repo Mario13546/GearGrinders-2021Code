@@ -9,6 +9,9 @@ public class Drive {
     /* Class Variables */
     double leftDriveStartPosition ;
     double rightDriveStartPosition;
+    
+    //Constants
+    final double TICKS_PER_INCH = 60.79;
 
     //firstTime variable
     private boolean firstTime = true;
@@ -73,13 +76,13 @@ public class Drive {
         robot.rightDrive.setPower(AUTO_POWER);
 
         //Stop movement
-        if (robot.rightDrive.getCurrentPosition() > (leftTargetInteger - 0.001) ) {
+        if (robot.rightDrive.getCurrentPosition() > (leftTargetInteger - TICKS_PER_INCH) ) {
             firstTime = true;
             robot.stopAutoMovement();
 
             return HardwareRobot.DONE;
         }
-        else if (robot.rightDrive.getCurrentPosition() > (rightTargetInteger - 0.001) ) {
+        else if (robot.rightDrive.getCurrentPosition() > (rightTargetInteger - TICKS_PER_INCH) ) {
             firstTime = true;
             robot.stopAutoMovement();
 
@@ -94,9 +97,8 @@ public class Drive {
      * Converts inches to encoder ticks
      */
     public double inchesToTicks(double targetInches) {
-        final double TICKS_PER_INCH = 93.5/48000;      //This comes to be around 0.0019479167 ticks per inch
         double ticks = targetInches * TICKS_PER_INCH;
-
+        
         return ticks;
     }
 

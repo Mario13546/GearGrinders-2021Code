@@ -40,9 +40,9 @@ public class Auto extends LinearOpMode {
     private double status = HardwareRobot.CONT;
 
     // Constants
-    static final double DRIVE_SPEED = 0.75;
+    static final double DRIVE_SPEED = 0.50;
     static final double TURN_SPEED  = 0.50;
-    static final double TICKS_PER_INCH = 93.5/48000; //This comes to be around 0.0019479167 ticks per inch
+    static final double TICKS_PER_INCH = 60.79;
     
     @Override
     public void runOpMode() {
@@ -70,7 +70,7 @@ public class Auto extends LinearOpMode {
 
         // Step through each leg of the path,
         // Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 48, 48, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 

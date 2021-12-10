@@ -14,6 +14,7 @@ public class Controls {
     double driveSpeedMultiplier  = 1.00;
     double tiltSpeedMultiplier   = 0.50;
     double extendSpeedMultiplier = 0.50;
+    double spinSpeedMultiplier   = 0.50;
     
     //Object Creation
     OpMode logitech;
