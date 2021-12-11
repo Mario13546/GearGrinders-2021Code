@@ -13,7 +13,8 @@ public class DriverControlled extends OpMode {
     HardwareRobot robot       = HardwareRobot.getInstance();
     ElapsedTime   runtime     = new ElapsedTime();   // Starts counting the time
     Controls      controls    = new Controls(this);  // A class for the controling functions
-    Grabber       grabber     = new Grabber();       // A class for grabber related functions
+    Grabber       grabber     = new Grabber();       // A class for the grabber related functions
+    Spinner       spin        = new Spinner();       // A class for the spinner related functions
     Drive         drive       = new Drive();         // A class for drive functions
 
     /*
@@ -58,6 +59,9 @@ public class DriverControlled extends OpMode {
         //Grabber control
         grabberControl();
 
+        //Spinner Control
+        spinnerControl();
+
         //Displays runtime
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
@@ -99,6 +103,17 @@ public class DriverControlled extends OpMode {
 
         //Makes the grabber, well grab...
         grabber.setGrabberPosition(grabberPosition);
+    }
+
+    /**
+     * A method to control the spinner wheel
+     */
+    private void spinnerControl() {
+        //Gamepad 2 Functions
+        double spinPower = controls.spinnerPower();
+
+        //Passes the power that allows the spinner to spin
+        spin.spinControl(spinPower);
     }
 
 }

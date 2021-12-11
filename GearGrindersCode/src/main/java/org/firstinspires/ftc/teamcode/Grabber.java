@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class Grabber {
     /* Class Variables */
-    double speedMultiplier = 1.00;
+    //Nothing yet...
 
     //First Time
     boolean firstTime = true;
