@@ -27,10 +27,10 @@ public class Drive {
     /**
      * Tank Drive movement code
      */
-    public void tankDrive(double drive, double turn) {
+    public void tankDrive(double leftDrive, double rightDrive) {
         //Calculate the powers
-        double leftPower  = drive + turn;
-        double rightPower = drive - turn;
+        double leftPower  = leftDrive;
+        double rightPower = rightDrive;
 
         //Clamps the powers
         leftPower  = Range.clip(leftPower, -1.0, 1.0);
@@ -46,7 +46,8 @@ public class Drive {
      */
     public int autoForward(double power, double rightInches, double leftInches) {
         //Variables
-        final double AUTO_POWER = power;
+        double leftAutoPower  = power * 1.00;
+        double rightAutoPower = power * 1.00;
 
         //Gets the start position for the motors
         if (firstTime == true) {
@@ -72,8 +73,8 @@ public class Drive {
         robot.startAutoMovement();
 
         //Sets the motor power
-        robot.leftDrive .setPower(AUTO_POWER);
-        robot.rightDrive.setPower(AUTO_POWER);
+        robot.leftDrive .setPower(leftAutoPower) ;
+        robot.rightDrive.setPower(rightAutoPower);
 
         //Stop movement
         if (robot.rightDrive.getCurrentPosition() > (leftTargetInteger - TICKS_PER_INCH) ) {

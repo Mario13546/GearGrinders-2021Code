@@ -79,11 +79,11 @@ public class DriverControlled extends OpMode {
      */
     private void wheelControl() {
         // Gamepad 1 inputs
-        double leftStickY  = controls.drivePower();
-        double rightStickX = controls.turnPower();
+        double leftStickY  = controls.leftDrivePower();
+        double rightStickY = controls.rightDrivePower();
 
-        //Mecanum Drive Method
-        drive.tankDrive(leftStickY, rightStickX);
+        //Tank Drive Method
+        drive.tankDrive(leftStickY, rightStickY);
     }
 
     /**

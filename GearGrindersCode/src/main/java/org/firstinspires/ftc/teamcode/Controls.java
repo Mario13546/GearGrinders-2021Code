@@ -31,15 +31,15 @@ public class Controls {
      * Gamepad 1
      * Controls the driving of the robot 
      */
-    public double drivePower() {
+    public double leftDrivePower() {
         double power = -1 * logitech.gamepad1.left_stick_y;
         double drivePower = power * driveSpeedMultiplier;
 
         return drivePower;
     }
 
-    public double turnPower() {
-        double power = logitech.gamepad1.right_stick_x;
+    public double rightDrivePower() {
+        double power = -1 * logitech.gamepad1.right_stick_y;
         double turnPower = power * driveSpeedMultiplier;
 
         return turnPower;
