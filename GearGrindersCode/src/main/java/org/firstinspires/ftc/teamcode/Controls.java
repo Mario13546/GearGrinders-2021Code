@@ -14,7 +14,7 @@ public class Controls {
     double driveSpeedMultiplier  = 1.00;
     double tiltSpeedMultiplier   = 0.50;
     double extendSpeedMultiplier = 0.50;
-    double spinSpeedMultiplier   = 0.50;
+    double spinSpeedMultiplier   = 0.65;
     
     //Object Creation
     OpMode logitech;
@@ -32,14 +32,14 @@ public class Controls {
      * Controls the driving of the robot 
      */
     public double leftDrivePower() {
-        double power = -1 * logitech.gamepad1.left_stick_y;
+        double power = logitech.gamepad1.left_stick_y;
         double drivePower = power * driveSpeedMultiplier;
 
         return drivePower;
     }
 
     public double rightDrivePower() {
-        double power = -1 * logitech.gamepad1.right_stick_y;
+        double power = logitech.gamepad1.right_stick_y;
         double turnPower = power * driveSpeedMultiplier;
 
         return turnPower;

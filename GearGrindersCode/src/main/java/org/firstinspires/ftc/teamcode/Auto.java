@@ -70,9 +70,8 @@ public class Auto extends LinearOpMode {
 
         // Step through each leg of the path,
         // Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED, 12, 12, 5.0);      // S1: Forward 12 Inches with 5 Sec timeout
-        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED, 12, 12, 5.0); // S1: Forward 12 Inches with 5 Sec timeout
+        encoderRotate(TURN_SPEED, 90, 5.0);     // S2: Rotate 90 degrees; I doubt it will do this
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -97,7 +96,7 @@ public class Auto extends LinearOpMode {
 
             // Drives
             if (status == HardwareRobot.CONT) {
-                status = drive.autoForward(power, rightInches, leftInches);
+                status = drive.autoDrive(power, rightInches, leftInches);
             }
             else if (status == HardwareRobot.DONE) {
                 status = HardwareRobot.CONT;
@@ -124,6 +123,54 @@ public class Auto extends LinearOpMode {
             sleep(250);   // optional pause after each move
         }
     }
+
+    /*
+     *  Method to perfmorm a relative move, based on encoder counts.
+     *  Encoders are not reset as the move is based on the current position.
+     *  Move will stop if any of three conditions occur:
+     *  1) Move gets to the desired position
+     *  2) Move runs out of time
+     *  3) Driver stops the opmode running.
+     */
+    public void encoderRotate(double power, double degrees, double timeoutS) {
+        int newLeftTarget;
+        int newRightTarget;
+
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+            // Reset timeout
+            runtime.reset();
+
+            // Drives
+            if (status == HardwareRobot.CONT) {
+                status = drive.autoRotate(power, degrees);
+            }
+            else if (status == HardwareRobot.DONE) {
+                status = HardwareRobot.CONT;
+                return;
+            }
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget  = robot.leftDrive .getCurrentPosition() + (int)drive.degreesToTicks(degrees);
+            newRightTarget = robot.rightDrive.getCurrentPosition() - (int)drive.degreesToTicks(degrees);
+            
+            // Keep looping while OpMode is still active, there is time left, and both motors are running.
+            while (opModeIsActive() &&
+                   (runtime.seconds() < timeoutS) &&
+                   (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path2", "Currently at %7d :%7d",
+                                            robot.leftDrive.getCurrentPosition(),
+                                            robot.rightDrive.getCurrentPosition());
+                telemetry.update();
+            }
+
+            sleep(250);   // optional pause after each move
+        }
+    }
+
 }
 
 //End of the Auto class
