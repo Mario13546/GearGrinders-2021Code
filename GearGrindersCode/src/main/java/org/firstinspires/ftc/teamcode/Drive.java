@@ -47,8 +47,8 @@ public class Drive {
      */
     public int autoDrive(double power, double rightInches, double leftInches) {
         //Variables
-        double leftAutoPower  = power * 1.00;
-        double rightAutoPower = power * 1.00;
+        double leftAutoPower  = power * 0.50;
+        double rightAutoPower = power * 0.50;
 
         //Gets the start position for the motors
         if (firstTime == true) {
@@ -61,8 +61,8 @@ public class Drive {
         }
 
         //Inches to ticks
-        double leftTarget = inchesToTicks(rightInches);
-        double rightTarget = inchesToTicks(leftInches);
+        double leftTarget = inchesToTicks(rightInches) * -1;
+        double rightTarget = inchesToTicks(leftInches) * -1;
         int    leftTargetInteger  = (int)leftDriveStartPosition + (int)leftTarget;
         int    rightTargetInteger = (int)rightDriveStartPosition + (int)rightTarget;
 
@@ -132,15 +132,15 @@ public class Drive {
      */
     public int autoRotate(double power, double degrees) {
         //
-        double leftAutoPower  = power * 1.00;
-        double rightAutoPower = power * 1.00;
+        double leftAutoPower  = power * 0.50;
+        double rightAutoPower = power * 0.50;
 
         //Degrees to ticks
         double ticks = degreesToTicks(degrees);
 
         //Movement
-        double leftTarget  = ticks;
-        double rightTarget = ticks * -1;
+        double leftTarget  = ticks * -1;
+        double rightTarget = ticks;
         int    leftTargetInteger  = (int)leftDriveStartPosition + (int)leftTarget;
         int    rightTargetInteger = (int)rightDriveStartPosition + (int)rightTarget;
 
@@ -219,6 +219,8 @@ public class Drive {
         double circumfrance = 2 * Math.PI * ROBOT_RADIUS;
         double distance     = circumfrance * (targetDegrees / 360);
         double ticks        = inchesToTicks(distance);
+        
+        ticks = ticks * 2;
         
         return ticks;
     }

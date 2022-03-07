@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="Driver Controlled", group="Iterative Opmode")
 public class DriverControlled extends OpMode {
     /* Class variables */
-    //
+    //Nothing yet...
 
     /* Instance Creation */
     HardwareRobot robot       = HardwareRobot.getInstance();
